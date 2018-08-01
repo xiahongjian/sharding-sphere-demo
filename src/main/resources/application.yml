@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    druid: 
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+    primary:
+      url: jdbc:mysql://localhost:3306/master?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+      filters: stat
+    secondary: 
+      url: jdbc:mysql://localhost:3306/slave?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+      filters: stat
+      
+      
+mybatis:
+  typeAliasesPackage: tech.hongjian.sharding_sphere_demo.entity  
+  configuration:
+    map-underscore-to-camel-case: true
+  
+logging:
+  level: 
+    com.example.multi_datasource.mapper: debug
